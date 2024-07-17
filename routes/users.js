@@ -24,4 +24,18 @@ router.get('/users', async (req, res) => {
   }
 });
 
+// Sign-in a user
+router.post('/signin', async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    const user = await User.findOne({ email, password });
+    if (!user) {
+      return res.status(404).json({ error: 'User not registered' });
+    }
+    res.status(200).json(user);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
 module.exports = router;
