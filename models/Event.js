@@ -5,7 +5,8 @@ const EventSchema = new Schema({
   image: { type: Schema.Types.ObjectId, ref: 'uploads.files', required: true },
   title: { type: String, required: true },
   description: { type: String, required: true },
-  date: { type: Date, required: true },
+  start_date: { type: Date, required: true },
+  end_date: { type: Date, required: true },
   location: {
     address: String,
     city: String,

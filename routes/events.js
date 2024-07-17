@@ -22,17 +22,18 @@ const upload = multer({ storage });
 // Create a new event with file upload
 router.post('/events', upload.single('image'), async (req, res) => {
   try {
-    const { title, description, date, location, status, userid } = req.body;
+    const { title, description, start_date, end_date, location, status, userid } = req.body;
     const image = req.file.id;
 
     const newEvent = new Event({
       image,
       title,
       description,
-      date,
+      start_date: new Date(start_date),
+      end_date: new Date(end_date),
       location: JSON.parse(location),
       status,
-      userid
+      userid: mongoose.Types.ObjectId(userid)
     });
     await newEvent.save();
     res.status(201).json(newEvent);
