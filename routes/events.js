@@ -22,7 +22,11 @@ const upload = multer({ storage });
 // Create a new event with file upload
 router.post('/events', upload.single('image'), async (req, res) => {
   try {
-    const { title, description, start_date, end_date, location, status, userid } = req.body;
+    // Log the incoming request body and file details
+    console.log('Incoming request body:', req.body);
+    console.log('Incoming file:', req.file);
+
+    const { title, description, start_date, end_date, address, city, state, zip, status, userid } = req.body;
     const image = req.file.id;
 
     const newEvent = new Event({
@@ -31,13 +35,15 @@ router.post('/events', upload.single('image'), async (req, res) => {
       description,
       start_date: new Date(start_date),
       end_date: new Date(end_date),
-      location: JSON.parse(location),
+      location: { address, city, state, zip },
       status,
       userid: mongoose.Types.ObjectId(userid)
     });
     await newEvent.save();
+    console.log('Event saved:', newEvent);
     res.status(201).json(newEvent);
   } catch (error) {
+    console.error('Error saving event:', error);
     res.status(400).json({ error: error.message });
   }
 });
