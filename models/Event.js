@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const EventSchema = new Schema({
-  image: { type: Schema.Types.ObjectId, ref: 'uploads.files', required: true },
+  image: { type: String, required: true },  // Store the filename of the image
   title: { type: String, required: true },
   description: { type: String, required: true },
   start_date: { type: Date, required: true },
