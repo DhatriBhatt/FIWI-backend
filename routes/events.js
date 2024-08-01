@@ -1,4 +1,3 @@
-// routes.js
 const express = require('express');
 const mongoose = require('mongoose');
 const Event = require('../models/Event');
