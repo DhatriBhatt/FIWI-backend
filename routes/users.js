@@ -1,12 +1,12 @@
 const express = require('express');
-const router = express.Router();
 const User = require('../models/User');
+const router = express.Router();
 
 // Create a new user
 router.post('/register', async (req, res) => {
   try {
     const { first_name, last_name, email, password } = req.body;
-    
+
     // Log incoming request
     console.log('Register request received:', { first_name, last_name, email });
 
@@ -22,13 +22,13 @@ router.post('/register', async (req, res) => {
     console.log('New user registered:', newUser);
     res.status(201).json(newUser);
   } catch (error) {
-    console.error('Error during registration:', error.message);
-    res.status(400).json({ error: error.message });
+    console.error('Error during registration:', error);
+    res.status(500).json({ error: 'Server error. Please try again later.' });
   }
 });
 
 // Get all users
-router.get('/users', async (req, res) => {
+router.get('/', async (req, res) => {
   try {
     const users = await User.find();
     res.status(200).json(users);
